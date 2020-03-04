@@ -1,0 +1,461 @@
+\documentclass{beamer}
+
+\usepackage[english,italian]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{verbatim}
+
+\setbeamertemplate{frametitle}[default][center]
+
+%copertina
+
+\title{
+			\includegraphics[width=0.37\textwidth]{images/Logo_Roma_Tre}~ \vspace{0.5cm} \\
+			\footnotesize{Corso di Laurea Triennale in Matematica\\Corso IN420\\A.A. 2017/2018\\[0.25cm]} 
+			\huge{Ottimalità dell'algoritmo di compressione Lempel - Ziv }}
+	        \author{Castellitto Simone}
+%\subtitle{Sample Subtitle}
+
+
+
+\begin{document}
+	
+    
+    % prima Slide ovvero che richiama la copertina
+    
+    
+    
+    \frame {		
+
+		\titlepage
+		
+
+	}
+	
+    
+    
+    	% seconda slide
+    
+    
+    
+    \frame {
+		\frametitle{Lempel e Ziv }
+        \section{introduction} Fra il 1976 e il 1978 i due scienziati 				Lempel e Ziv pubblicarono tre ricerche che diedero
+				vita alle fattorizzazioni LZ77 e LZ78 che non ammettono 				perdita di informazioni \footnote{Lossless Compression contrapposta alla Lossy Data Compression}:
+                		%\framesubtitle{An Example of Lists}
+		%\begin{itemize}
+			%\item[] 1
+			%\item[] 2
+			%\item[] 3
+		%\end{itemize}
+	\begin{itemize}
+			\item Lempel, A. and Ziv, J. 1976 ”On The Complexity of 				finite sequences”. IEEE Trans.
+				Inf. Theory 22, 75-81;
+			\item Lempel, A. and Ziv, J. 1977 ”A universal algorithm 				for sequential data compression”.
+				IEEE Trans. Inf. Theory 23, 3, 337-343;
+
+			\item Lempel, A. and Ziv, J. 1978 ”Compression of 						individual sequences via variable-rate
+				coding”. IEEE Trans. Inf Theory 24, 5, 530-536.
+		\end{itemize}
+
+	}
+	
+    
+    
+    		%terza slide
+    	
+    
+    
+    \frame{										
+		\frametitle{L'algoritmo LZ78}
+		%\framesubtitle{An Example of Lists}
+		%\begin{itemize}
+			%\item[] 1
+			%\item[] 2
+			%\item[] 3
+		%\end{itemize}
+        Nell'articolo del 1978 Ziv e Lempel descrissero un algoritmo che divide una stringa in "frasi", dove ogni "frase" è la piu breve non vista fino a quel punto. \\
+        Per esempio se la stringa è {\color{red}{ABBABBABBBAABABAA}}... , la analizziamo come {\color{red}{A}},{\color{red}{B}},{\color{red}{BA}},{\color{red}{BB}},{\color{red}{AB}},{\color{red}{BBA}},{\color{red}{ABA}},{\color{red}{BAA}}....\\
+        Quindi codifichiamo la stringa dando l'indirizzo del prefisso e il valore dell'ultimo simbolo.\\
+        Quindi per esempio codifichiamo la stringa precedente come {\color{red}{(0,A)}},{\color{red}{(0,B)}},{\color{red}{(2,A)}},{\color{red}{(2,B)}},{\color{red}{(1,B)}},{\color{red}{(4,A)}},{\color{red}{(5,A)}},{\color{red}{(3,A)}}....
+      
+	}
+    
+    
+    		%quarta slide
+    
+    
+ \begin{comment}   
+	\frame{
+	    \frametitle{Ottimalita'dell'algoritmo LZ78}
+	%    This is a paragraph.\\
+     %   This is a paragraph.\\
+      %  This is a paragraph.\\
+  % \vspace{0.5cm}
+   %     This is a paragraph.\\
+             
+	L'essenza della dimostrazione sono dei risultati numerici che mostrano che il numero di frasi non può essere troppo grande se sono tutte distinte, e la probabilita'di ogni sequenza di simboli può essere legata ad una funzione che dipende dal numero di frasi ottenute.\\
+    }
+    
+  \end{comment}
+    
+    
+    
+    
+    	%quinta slide
+    
+    
+    
+    
+   \frame{
+   \frametitle{Ottimalita'dell'algoritmo LZ78}
+    L'algoritmo richiede due "letture" della stringa:\\	\begin{itemize}
+			\item Nel primo passaggio dividiamo la stringa e calcoliamo $c(n)$ ovvero il numero di "frasi" che utilizzeremo per decidere quanti bits allocare per i puntatori nell'algoritmo ovvero $[\log{c(n)}]$
+			\item Nel secondo passaggio calcoliamo i puntatori e codifichiamo la stringa come abbiamo mostrato.
+			%\item[] 3
+		\end{itemize}
+Sia quindi $c(n)$ il numero di frasi di una stringa di lunghezza n. Mostreremo che la lunghezza della stringa compressa,\vspace {0,3cm} ovvero $\frac{c(n)(\log{c(n)}+1)}{n} \xrightarrow {} H(x)$ per una sequenza Ergodica stazionaria\\ \vspace {0,3cm} $X_1 X_2 ... X_n.$
+   %\begin{center}
+   %	\includegraphics[width=0.37\textwidth]{images/Logo_Roma_Tre}~ \vspace{0.5cm}
+  % \end{center}
+   %\centering{lol}
+   
+   }
+   
+   
+   
+ 		%sesta slide PRIMO LEMMA
+ 
+ 
+ 
+\frame{
+	\frametitle{Primo Lemma}
+Prima prima cosa dimostriamo alcuni Lemmi che ci serviranno nella dimostrazione del teorema:\\
+\vspace{0,5cm}
+{\color{red}{Lemma 1}}\\
+il numero di frasi di una "divisione senza ripetizioni" \footnote{una "divisione senza ripetizioni" è una divisione dove non ci sono due frasi identiche ad esempio: 0,111,1} di una sequenza binaria $c(n)$ soddisfa:
+ \begin{equation}
+ \label{teorema}
+ c(n) \le \frac{n}{(1-\varepsilon_n) \log n}
+ \end{equation}\\
+dove $\varepsilon_n = \min\{ 1,\frac{\log{(\log n)}+4}{\log n} \} \xrightarrow{} 0$ per $ n \xrightarrow{} \infty$
+
+}
+
+
+
+		%settima slide DIMOSTRAZIONE PRIMO LEMMA
+
+
+
+
+\frame{
+		\centering{\large{\color{red}{Dimostrazione:}}}\\ \vspace{0,4cm}
+        
+        Sia
+        \begin{equation}
+        n_k = \displaystyle\sum_{j=1}^k j2^j = (k-1) 2^{k+1}+2
+        \end{equation}\\
+        
+        %j=1 ho due frasi distinte, 0 e 1 entrambe di lunghezza 1 e quindi 1+1=2
+        %j=2 ho 4 frasi distinte, 00 01 11 10 tutte di lunghezza 2 e quindi 2x4=8
+        %j=3 ho 8 frasi distinte 000 010 001 100 111 101 011 110 tutte di lunghezza 3 e 			quindi 3x8= 3x2^3
+        %.
+        %.
+        %.
+        %j=k ho 2^k frasi distinte di lunghezza k e quindi kx2^k
+        La somma delle lunghezze di tutte le frasi distinte con lunghezza $\le k$.E diciamo n=$n_k$ quando tutte le frasi sono  di lunghezza $\le k$ e quindi 
+       \\
+       \begin{equation}
+        c(n_k) = \displaystyle\sum_{j=1}^k 2^j =2^{k+1}-2<2^{k+1}\le \frac{n_k}{k-1}				\end{equation}
+        \\
+       se $n_k \le n < n_{k+1}$, scriviamo $n = n_k + \Delta$, dove $\Delta < (k+1)2^{k+1}$.Dopodichè la divisione in frasi più piccole ha ognuna delle frasi di lunghezza $\le k$ e $\Delta/(k+1)$ frasi di lunghezza k+1. In questo modo:
+}
+
+
+
+			%ottava slide DIMOSTRAZIONE PRIMO LEMMA (2)
+
+
+
+
+\frame{
+ \begin{equation}\label{4}c(n) \le \frac{n_k}{k-1}+\frac{\Delta}{k+1}\le \frac{n_k+\Delta}{k-1}=\frac{n}{k-1} \end{equation}\\
+ 	Ora vogliamo legare la dimensione di $k$ ad un dato $n$. Sia $n_k\le n<n_{k+1}$. Allora \\
+    \begin{equation}
+    	n \ge n_k = (k-1)2^{k+1}+2 \ge 2^k
+ 	\end{equation}
+Pertanto\\
+	\begin{equation}
+    \label{6}
+	k \le \log n
+	\end{equation}
+Inoltre 
+	\begin{equation}
+	n \le n_{k+1}=k2^{k+2}+2 \le(k+2)2^{k+2} \le (\log n +2)2^{k+2} 
+	\end{equation}
+dalla (\ref{6}), e quindi
+\begin{equation}
+	k+2 \ge \log{\frac{n}{\log{n}+2}}
+\end{equation}
+}
+
+
+		%nona slide DIMOSTRAZIONE PRIMO LEMMA (3)
+
+
+
+\frame{
+O anche per ogni $n\ge 4$,
+	\begin{equation}
+	k-1 \ge \log n - \log{(\log n +2)}-3
+	\end{equation}
+    \begin{equation}
+    \ge \left( 1- \frac{\log{(2\log n)}+3}{\log n} \right) \log n
+    \end{equation}
+    \begin{equation}
+    	= \left( 1- \frac{\log{(\log n)}+4}{\log n} \right) \log n
+    \end{equation}
+    \begin{equation}
+    	\label{12}
+    	= (1- \varepsilon_n)\log n.
+    \end{equation}
+    
+    Notando che  $\varepsilon_n = \min\{ 1,\frac{\log{(\log n)}+4}{\log n} \}$. 			Combinando 
+    (\ref{12}) con la (\ref{4}) otteniamo la (\ref{teorema}).   $\blacksquare$
+}
+
+
+
+		%decima slide SECONDO LEMMA
+
+
+
+\frame{
+	\frametitle{Secondo Lemma}
+    {\color{red}{Lemma 2}}\\
+	Sia $Z$ una variabile aleatoria intera non negativa con valore $\mu$ allora l'entropia $H(Z)$ è stimata da:
+    \begin{equation}
+    	H(Z)\le (\mu +1) \log(\mu +1)- \mu\log\mu.
+    \end{equation}
+  {\color{red}{Dimostrazione}}:\\
+	 Il lemma è diretta conseguenza dei risultati del 		teorema sulla massima 			distribuzione dell'entropia, che mostra che la distribuzione 	geometrica 				massimizza l'entropia di una variabile aleatoria intera non negativa ad 		un 		certo limite.
+    }
+    
+
+		%undicesima slide DEFINIZIONI
+
+
+
+\frame{
+	Sia $\{X_i\}^\infty_{-\infty}$ un processo stazionario ergodico con funzione di 		probabilità di massa $P(x_1,...,x_n)$ definiamo l'approssimazione di Markov per 		intero fissato $k$ per $P$ come 
+    \begin{equation}
+   		 Q_k(x_{-(k-1)},...,x_0,x_1,...,x_n):=P(x^0_{-(-k-											1)})\prod\limits_{j=1}^{n}P(x_j|x^{j-1}_{j-k}),
+    \end{equation}
+    dove $x^j_i:=(x_i,x_{i+1},...,x_j),i\le j$, e lo stato iniziale $x^0_{-(k-1)}$ è 		parte della definizione di $Q_k$.
+    Finché $P(X_n|X^{n-1}_{n-k})$ è esso stesso un processo ergodico, abbiamo
+    \begin{equation}
+    	-\frac{1}{n}\log{Q_k(X_1,X_2,...,X_n|X^0_{-(k-1)})}=H(X_j|X^{j-1}_{j-k})
+    \end{equation}
+}
+
+
+
+		%dodicesima slide
+
+
+
+
+\frame{
+	Vogliamo legare il valore dell'algoritmo LZ78 con il valore dell'entropia di 			un'approssimazione di Markov per un intero fissato $k$, per ogni k. Il valore 			dell'entropia dell'approssimazione di Markov $H(X_j|X^{j-1}_{j-k})$ converge al 		valore di entropia del processo come $k\xrightarrow{} \infty$ e questo ne prova il 		risultato.
+	Supponiamo che $X^n_{-(k-1)}=x^n_{-(k-1)}$, e supponiamo che $x^n_1$ è diviso in c frasi distinte, $y_1,...,y_c$. Sia $v_i$ l'indice dell'inizio della i-esima frase 	\footnote{i.e., $y_i=x^{v_{i+1}-1}_{{v_i}}$}. Per ogni $i=1,2,...,c$, definiamo 		$s_i=x^{v_i-1}_{v_i-k}$. Quindi $s_i$ rappresenta i $k$ bits di $x$ che precedono 		$y_i$. Ovviamente $s_1=x^0_{-(k-1)}$.
+    Sia $c_{ls}$ il numero di frasi $y_i$ con lunghezza l e precedente lo stato $s_i=s$ per $l=1,2,...$ e $s\in \chi^k$. Quindi abbiamo:
+    \begin{equation}
+    	\label{16}
+    	\displaystyle\sum_{l,s}c_{ls}=c
+    \end{equation}
+    e
+    \begin{equation}
+    	\label{17}
+    	\displaystyle\sum_{l,s}lc_{ls}=n.
+    \end{equation}
+    }
+    
+    
+    		%tredicesima slide TERZO LEMMA
+            
+            
+            
+\frame{
+	\frametitle{Terzo Lemma}
+	Ora proviamo un risultato ancora più forte sulla probabilità di una stringa 			basato sulla sua divisione. \\ \vspace{0.5cm}
+	{\color{red}{Terzo Lemma}} (Disuguaglianza di Ziv)\\
+    Per ogni divisione senza ripetizioni (in particolare quella dell'algoritmo LZ78) della stringa 		$x_1,x_2,...,x_n$, abbiamo:
+    \begin{equation}
+    	\log{Q_k(x_1,x_2,...,x_n|s_1)\le -\displaystyle\sum_{l,s}c_{ls}\log{c_{ls}}}.
+    \end{equation}
+    }
+
+
+		%quattordicesima slide DIMOSTRAZIONE TERZO LEMMA
+
+
+\frame{
+	\centering{\large{\color{red}{Dimostrazione:}}}\\
+    	Scriviamo:
+        \begin{equation}
+        	Q_k(x_1,x_2,...,x_n|s_1)=Q_k(y_1,y_2,...,y_n|s_1)  										=\prod\limits_{i=1}^{c}P(y_i|s_i)
+        \end{equation}
+	O meglio:
+    	\begin{equation}
+    		\log{Q_k(x_1,x_2,...,x_n|s_1)}=\displaystyle\sum_{i=1}^c\log{P(y_i|s_i)}=
+    	\end{equation}
+        \begin{equation}
+        	=\displaystyle\sum_{l,s}c_{ls}\displaystyle\sum_{i:|y_i|=l,s_i=s}\frac{1}				{c_{ls}}\log{P(y_i|s_i)}
+        \end{equation}
+        \begin{equation}
+        	\ge 																			\displaystyle\sum_{l,s}c_{ls}\log{\left(\displaystyle\sum_{i:|y_i|=l,s_i=s}\frac{1}				{c_{ls}}P(y_i|s_i)\right)}
+        \end{equation}
+        }
+        
+        
+        
+        %quindicesima slide DIMOSTRAZIONE TERZO LEMMA (2)
+        
+        
+\frame{  
+	Ora, finchè le $y_i$ sono distinte, abbiamo 											$\displaystyle\sum_{i:|y_i|=l,s_i=s}\frac{1}{c_{ls}}P(y_i|s_i)\le 1$
+    Da cui:
+    \begin{equation}
+    	    \log{Q_k(x_1,x_2,...,x_n|s_1)\le\displaystyle\sum_{l,s}c_{ls}\log\frac{1}				{c_{ls}}}. 
+     \end{equation}
+    Che prova il lemma.   $\blacksquare$
+}
+
+
+			%quindicesima slide TEOREMA PRINCIPALE
+            
+            
+\frame{
+	\frametitle{Il Teorema}
+    Ora possiamo dimostrare il teorema principale:\\
+ 	Sia ${X_n}$ un processo stazionario ergodico binario con entropia 			$H(X)$, e sia $c(n)$ il numero di frasi in una distinzione senza ripetizioni in un esempio di 	lunghezza $n$. Allora
+    \begin{equation}
+    	\limsup_{n\xrightarrow{}\infty}{\frac{c(n)\log{c(n)}}{n}}\le H(x)
+    \end{equation}
+	con probabilità 1
+}
+
+
+			%sedicesima slide DIMOSTRAZIONE TEO PRINCIPALE
+            
+            
+\frame{
+	\frametitle{Dimostrazione:}
+    
+   	Cominciamo con la disuguaglianza di Ziv:
+    	\begin{equation}
+    		\log{Q_k(x_1,x_2,...,x_n|s_1)}\le -\displaystyle\sum_{l,s}c_{ls}\log\frac{c{c_{ls}}}{c}=-c\log{c}-c\displaystyle\sum_{ls}\frac{c_{ls}}{c}\log{\frac{c_{ls}}{c}}.
+    	\end{equation}
+     Scrivendo $\pi_{ls}=\frac{c{ls}}{c}$, per (\ref{16}) e (\ref{17}), abbiamo:
+     \begin{equation}
+  \displaystyle\sum_{l,s}\pi_{ls}=1,\hspace{0,5cm} \displaystyle\sum_{l,s}l\pi_{ls}=\frac{n}{c}
+     \end{equation}
+Ora definiamo due variabili aleatorie $U,V$ tali che:
+	\begin{equation}
+		Pr(U=l,V=s)=\pi_{ls}
+	\end{equation}
+    Pertanto, $E(U)=\frac{n}{c}$ e
+    \begin{equation}
+    	\log{Q_k(x_1,x_2,...,x_n|s_1)\le c\hspace{0,1cm} H(U,V)-c\log c}
+    \end{equation}
+    
+}
+
+
+		%diciassettesima slide DIMOSTRAZIONE TEO. PRINCIPALE (2)
+
+
+
+\frame{
+O meglio;
+	\begin{equation}
+		-\frac{1}{n}\log{Q_k(x_1,x_2,...x_n|s_1)} \ge \frac{c}{n}\log c-\frac{c}{n}H(U,V).
+	\end{equation}
+
+Ora 
+\begin{equation}
+	H(U,V)\le H(U)+H(V)
+\end{equation}
+e $H(V) \le \log{|X|^k}=k$. Per il secondo lemma, abbiamo:
+\begin{equation}
+	H(U) \le (E(U)+1)\log{E(U)+1}-(E(U)\log{E(U)})
+\end{equation}
+\begin{equation}
+	=\left( \frac{n}{c}+1 \right) \log{\left(\frac{n}{c}+1\right ) }-\frac{n}{c}\log{\frac{n}{c}}
+\end{equation}
+\begin{equation}
+	=\log{\frac{n}{c}}+\left( \frac{n}{c}+1 \right)\log\left(\frac{c}{n}+1\right).
+\end{equation}
+Allora:
+\begin{equation}
+	\frac{c}{n}H(U,V)\le \frac{c}{n}k+\frac{c}{n}\log\frac{n}{c}+o(1)
+\end{equation}
+}
+
+
+%diciottesima slide DIMOSTRAZIONE TEOREMA PRINCIPALE (3)
+        	
+            
+
+\frame{
+Per un dato n, il massimo di $\frac{c}{n}\log\frac{n}{c}$ è raggiunto dal massimo valore di $c$ con $\frac{c}{n}\le\frac{1}{\varepsilon}$. Ma Per il Primo Lemma, $c\le\frac{n}{\log n}(1+o(1))$. Allora:
+\begin{equation}
+	\frac{c}{n}\log\frac{n}{c}\le O\left(\frac{\log\log n}{\log n}\right),
+\end{equation}
+e pertanto $\frac{c}{n}H(U,V)\rightarrow{}0$ con $ n\rightarrow\infty$. Inoltre,
+\begin{equation}
+	\frac{c(n)\log{c(n)}}{n}\le -\frac{1}{n}\log Q_k(x_1,x_2,...x_n|s_1)+\varepsilon_k(n),
+\end{equation}
+dove  $\varepsilon_k(n)\rightarrow{}0$ con $ n\rightarrow\infty$. Quindi con probabilità 1,
+\begin{equation}
+	\limsup_{n\rightarrow\infty}\frac{c(n)\log{c(n)}}{n} \le \lim_{n\rightarrow\infty}-\frac{1}{n}\log Q_k(X_1,X_2,...X_n|X^0_{-(k-1)})
+\end{equation}
+\begin{equation}
+	=H(X_0|X_{-1},...,X_{-k})
+\end{equation}
+\begin{equation}
+	\rightarrow H(X)\hspace{0,3cm}con\hspace{0,2cm}k\rightarrow\infty. \hspace{0,5cm}\blacksquare
+\end{equation}
+}
+
+
+			%diciannovesima slide CONCLUSIONE
+
+
+
+\frame{
+\frametitle{Conclusione}
+Ora proviamo che il codice LZ78 è ottimale.\\
+{\color{red}{Teorema}}:\\
+Sia $\{X_i\}_{-\infty}^{\infty}$ un processo stocastico binario stazionario ergodico.
+Sia $l(X_1,X_2,...,x_n)$ la lunghezza della parola in codice LZ78 associata a $X_1,X_2,...,X_n$. Allora:
+\begin{equation}
+	\limsup_{n\rightarrow\infty}\frac{1}{n}l(X_1,X_2,...,X_n)\le H(x) \text{ con probabilità 1,}
+\end{equation}
+Dove H(x) è il valore dell'entropia del processo stocastico.
+}
+
+
+			%ventesima slide DIMOSTRAZIONE CONCLUSIONE
+            
+            
+		
+\frame{
+Abbiamo mostrato che $l(X_1,X_2,...,X_n)=c(n)(\log{c(n)}+1),$ dove c(n) è il numero di frasi nella divisione senza ripetizioni della stringa $X_1,X_2,...,X_n$. Per il Primo Lemma, $\limsup c(n)/n=0$, e quindi il Teorema precedente stabilisce che:
+\begin{equation}
+	\limsup\frac{l(X_1,X_2,...,x_n)}{n}=\limsup\left(\frac{c(n)\log{c(n)}}{n}+\frac{c(n)}{n}\right) \le H(X)
+\end{equation}
+con probabilità 1 $\blacksquare$
+}
+\end{document}
